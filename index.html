@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Curves, Waves, and Blobs</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/kute.js@2.1.2/dist/kute.min.js"></script>
+
+    <style>
+      h1 {
+        font-size: 4rem;
+      }
+      h2 {
+        font-size: 2.3rem;
+      }
+      h3 {
+        font-size: 1.8rem;
+      }
+      p {
+        font-size: 1.3rem;
+      }
+
+      body {
+        margin: 0;
+        font-family: 'Varela Round', sans-serif;
+        color: white;
+        background: #202731;
+        overflow-x: hidden;
+      }
+
+      section {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        min-height: 400px;
+        padding-top: 100px;
+        
+      }
+
+      section-l {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        text-align: left;
+        min-height: 400px;
+        padding-top: 100px;
+      }
+
+      .blue {
+        background: #3c31dd;
+      }
+
+      .red {
+        background: #dd3f31;
+      }
+
+      .pink {
+        background: #ff0066;
+        overflow: hidden;
+      }
+
+      .dark {
+        background: #0f0f10;
+      }
+
+      /* Curved bg with plain CSS */
+
+      .curve {
+        position: absolute;
+        height: 250px;
+        width: 100%;
+        bottom: 0;
+        text-align: center;
+      }
+
+      .curve::before {
+        content: '';
+        display: block;
+        position: absolute;
+        border-radius: 100% 50%;
+        width: 55%;
+        height: 100%;
+        transform: translate(85%, 60%);
+        background-color: hsl(216, 21%, 16%);
+      }
+
+      .curve::after {
+        content: '';
+        display: block;
+        position: absolute;
+        border-radius: 100% 50%;
+        width: 55%;
+        height: 100%;
+        background-color: #3c31dd;
+        transform: translate(-4%, 40%);
+        z-index: -1;
+      }
+
+      /* Bubble bg with plain CSS */
+
+      .bubble::after {
+        content: '';
+        border-top-left-radius: 50% 100%;
+        border-top-right-radius: 50% 100%;
+        position: absolute;
+        bottom: 0;
+        z-index: -1;
+        width: 100%;
+        background-color: #0f0f10;
+        height: 85%;
+      }
+
+      /* Curved bg with SVG via https://www.shapedivider.app/ */
+
+      .wave {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+      }
+
+      .wave svg {
+        position: relative;
+        display: block;
+        width: calc(103% + 1.3px);
+        height: 262px;
+      }
+
+      .wave .shape-fill {
+        fill: hsl(240, 3%, 6%);
+      }
+
+      /* SVG background image via https://haikei.app/ */
+
+      .spacer {
+        aspect-ratio: 960/300;
+        width: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+
+      .layer1 {
+        background-image: url('./layer1.svg');
+      }
+      .layer2 {
+        background-image: url('./layer2.svg');
+      }
+
+      .flip {
+        transform: rotate(180deg);
+      }
+
+      /* Blobs SVG background image via https://haikei.app/ */
+
+      .blob-motion {
+        position: absolute;
+        transform: translateY(-20%);
+        z-index: 0;
+      }
+
+      .blob-content {
+        z-index: 1;
+      }
+
+      .blobs {
+        width: 100%;
+        background: url('./blobs.svg') no-repeat bottom / cover;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="blue">
+      <h1>Meeting the Brief</h1>
+      <p>A website is like a road. The more curves it has the more interesting it is.</p>
+      <div class="curve"></div>
+    </section>
+
+    <section>
+      <h1>Investigation</h1>
+      <p> The thematic brief for this project involves the development of a step counter using the Microbit’s shake gesture. This is an innovative application of the Microbit’s built-in accelerometer, demonstrating its potential for physical computing and user interaction.</p>
+      <p> There are several existing solutions that align with this project. For instance, fitness trackers and smartwatches often include step counting features. However, these devices can be expensive and may include additional features that are not necessary for a simple step counter. The Microbit provides a cost-effective and customizable alternative.</p>
+      <p>In terms of coding, there are numerous open-source projects and tutorials available online that demonstrate how to use the Microbit’s accelerometer for various applications. These resources provide valuable insights into the potential challenges and solutions associated with this type of project.</p>
+      <p>To understand the needs of potential end users, I conducted a survey among a group of fitness enthusiasts (aka my friends). The survey asked questions about their current methods of tracking physical activity, their satisfaction with these methods, and their interest in a customizable, DIY step counter.</p>
+      <p>The results of the survey indicated that while many participants were satisfied with their current fitness trackers, they were interested in the idea of a customizable step counter. Many participants expressed interest in being able to modify the device to suit their specific needs, such as adjusting the sensitivity of the step detection or integrating the device with other fitness tools.</p>
+      <p>Based on this research, it is clear that there is potential interest in a Microbit-based step counter.</p>
+    </section>
+
+    <section class="bubble">
+      <h1>Plan and Design</h1>
+      <p>The project is a step counter designed using a micro:bit. The primary goal of the project is to accurately count the number of steps taken by the user. The step counter is designed to meet the requirements of the end user by providing a simple and interactive interface..</p>
+
+      <p></p>
+      <p></p>
+
+      <h2>System Overview</h2>
+      <p>The system works by detecting shakes, which are interpreted as steps. The micro:bit is equipped with an accelerometer that can detect shakes. When a shake is detected, the step count is incremented. The system also includes a logging feature that records the number of steps taken. The log can be started or stopped by pressing the A or B buttons on the micro:bit, respectively. Pressing both buttons simultaneously resets the log.</p>
+
+      <p></p>
+      <p></p>
+
+      <h2>Technologies Used</h2>
+      <h3>Hardware</h3>
+      <p>The hardware used in this project is the micro:bit. The micro:bit is a pocket-sized computer that is designed to make learning easy and fun. It has 25 red LED lights that can flash messages and two programmable buttons that can be used to control games or pause and skip songs on a playlist. It can be used for all sorts of cool creations, from robots to musical instruments – the possibilities are endless.</p>
+
+      <h3>Software</h3>
+      <p>The software used in this project is the micro:bit Python editor. The Python editor allows you to write Python scripts for the micro:bit. The scripts are then downloaded to the micro:bit and run.</p>
+      <p>In this project, the Python script is used to control the operation of the step counter. The script includes functions for starting and stopping the log, resetting the log, and detecting and counting steps.</p>
+
+    </section>
+
+    <section-l class="dark">
+      <h1 class="">Create</h1>
+      <h2>Progress Log</h2>
+      <p>Week 1: Researched and selected the micro:bit for the step counter project. Explored the Python editor for micro:bit and familiarized myself with its features.</p>
+      <p>Week 2: Wrote the initial code to detect shakes and increment the step count. Tested the shake detection and step counting functionality.
+      </p>
+      <p>Week 3: Implemented the logging feature to record the number of steps. Tested the logging feature and fixed issues related to data type mismatches.</p>
+      <p>Week 4: Added button controls to start and stop the log, and to reset the log Tested the button controls and ensured they work as expected.</p>
+      <p>Week 5: Finalized the code and conducted comprehensive testing. Fixed minor bugs and improved the code efficiency.</p>
+
+      <p></p>
+      <p></p>
+
+      <h2>Unit Testing</h2>
+      <p>During the development process, unit testing was carried out to ensure that each part of the code was working as expected. For example, the shake detection and step counting functionality was tested by shaking the micro:bit and verifying that the step count was incremented correctly. The logging feature was tested by starting and stopping the log and checking that the number of steps was recorded accurately.</p>
+
+      <p></p>
+      <p></p>
+
+      <h2>Problem Encountered and Solution</h2>
+      <p>One of the problems encountered during the implementation was related to measuring the x, y, and z axes. Initially, the plan was to measure the acceleration on all three axes to provide a more accurate step count. However, this proved to be more complicated than anticipated.</p>
+      <p>The main issue was that the data from the three axes was difficult to interpret and graph effectively. The complexity of the data made it challenging to distinguish between a step and other movements. This resulted in inaccurate step counts and made the step counter less reliable.</p>
+      <p>After several attempts to resolve this issue, it was decided to simplify the design by only counting steps based on the shake gesture. This change made the step counter more user-friendly and reliable. The code related to the x, y, and z axes measurements was removed from the final implementation.</p>
+      <p>This experience highlighted the importance of simplicity in design. While it’s tempting to include as many features as possible, it’s crucial to ensure that these features enhance the user experience and don’t complicate it. In this case, removing the x, y, and z axes measurements improved the step counter’s functionality and usability.</p>
+
+      <p></p>
+      <p></p>
+
+      <h2>Important Piece of Code</h2>
+      <p>One important piece of code in this project is the function that detects shakes and increments the step count. This function is crucial because it is responsible for the primary functionality of the step counter.</p>
+      <p>def on_gesture_shake():</p>
+      <p>‎ ‎ ‎ ‎ ‎ ‎ ‎global steps</p>
+      <p>‎ ‎ ‎ ‎ ‎ ‎ ‎if logging:</p>
+      <p>‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ if True:</p>
+      <p>‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ steps+=1</p>
+      <p>‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ datalogger.log(datalogger.create_cv("steps", steps))</p>
+      <p>input.on_gesture(Gesture.SHAKE, on_gesture_shake)</p>
+      <p>This function works by detecting a shake gesture. If a shake is detected and logging is enabled, the step count is incremented and the new step count is logged.</p>
+    
+    </section-l>
+
+    <section class="red">
+      <h1>Evaluation</h1>
+      <p>The final artefact, a step counter designed using a micro:bit, has been developed in line with the requirements set out in the brief. The primary goal of the project was to accurately count the number of steps taken by the user, and this has been achieved successfully.</p>
+      <p>The step counter meets the needs of the end user by providing a simple and interactive interface. The user can easily start and stop the step count log by pressing the A or B buttons on the micro:bit. The step count is incremented each time the micro:bit detects a shake, which is interpreted as a step. This makes the step counter intuitive and easy to use.</p>
+      <p>However, there is always room for improvement. One area that could be improved is the shake detection algorithm. While the current algorithm works well for most situations, it may not accurately count steps when the user is running or moving quickly. A more sophisticated algorithm that takes into account the intensity and frequency of shakes could provide a more accurate step count in these situations.</p>
+      <p>Another potential improvement could be the addition of a display feature that shows the current step count on the micro:bit’s LED display. This would allow the user to check their step count at any time without having to stop the log.</p>
+      <p>In terms of future iterations, one possibility could be to add a feature that allows the user to set a daily step goal. The micro:bit could provide feedback throughout the day to let the user know how close they are to reaching their goal. This would make the step counter more engaging and could help motivate the user to stay active.</p>
+      <p>In conclusion, while the step counter has met the requirements of the brief and the needs of the end user, there are several ways it could be improved and expanded upon in the future. The key to these improvements will be to continue focusing on the needs of the end user and to make the step counter as intuitive and user-friendly as possible.</p>
+
+      <div class="wave">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+            class="shape-fill"
+          ></path>
+        </svg>
+      </div>
+    </section>
+
+    <div class="spacer layer1"></div>
+
+    <section>
+      <h1>References</h1>
+      <p><a href="https://microbit.org/projects/make-it-code-it/step-counter/">Microbit Step Counter Project</a></p>
+      <p><a href="https://makecode.microbit.org/projects/step-counter">MakeCode Microbit Step Counter</a></p>
+      <p><a href="https://microbit.org/projects/make-it-code-it/sensitive-step-counter/">Microbit Sensitive Step Counter</a></p>
+      <p><a href="https://microbit.org/get-started/user-guide/data-logging/">Data Logging Overview</a></p>
+      <p><a href="https://microbit.org/projects/make-it-code-it/makecode-wireless-data-logger/">MakeCode Data Logger</a></p>
+    </section>
+
+    <div class="spacer layer2 flip"></div>
+
+    <section class="pink">
+      <div class="blob-content">
+        <h1>Summary Word Count</h1>       
+      </div>
+
+      <svg
+        class="blob-motion"
+        id="visual"
+        viewBox="0 0 960 540"
+        width="960"
+        height="540"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        version="1.1"
+      >
+        <g transform="translate(450.7256843113689 283.4942824330989)">
+          <path
+            id="blob1"
+            d="M148.7 -134.9C193.7 -103.7 231.9 -51.9 232.4 0.6C233 53 196.1 106.1 151.1 128.6C106.1 151.1 53 143 -4.4 147.4C-61.8 151.8 -123.5 168.5 -151.2 146C-178.8 123.5 -172.4 61.8 -172.8 -0.4C-173.1 -62.5 -180.3 -124.9 -152.6 -156.1C-124.9 -187.3 -62.5 -187.1 -5.3 -181.8C51.9 -176.5 103.7 -166 148.7 -134.9"
+            fill="#BB004B"
+          ></path>
+        </g>
+        <g transform="translate(509.54377535978017 281.49390864595887)" style="visibility: hidden">
+          <path
+            id="blob2"
+            d="M115.4 -137.9C137.9 -92.9 136.4 -46.4 133.6 -2.8C130.8 40.8 126.6 81.6 104.1 118.4C81.6 155.2 40.8 188.1 -8.4 196.5C-57.5 204.8 -115 188.7 -151 151.9C-187 115 -201.5 57.5 -190.8 10.7C-180.1 -36.1 -144.1 -72.1 -108.1 -117.1C-72.1 -162.1 -36.1 -216.1 5.2 -221.2C46.4 -226.4 92.9 -182.9 115.4 -137.9"
+            fill="#BB004B"
+          ></path>
+        </g>
+      </svg>
+
+      <script>
+        const tween = KUTE.fromTo(
+          '#blob1',
+          { path: '#blob1' },
+          { path: '#blob2' },
+          { repeat: 999, duration: 3000, yoyo: true }
+        ).start();
+      </script>
+    </section>
+
+    <div class="spacer layer2"></div>
+
+    <section class="blobs">
+    </section>
+  </body>
+</html>
